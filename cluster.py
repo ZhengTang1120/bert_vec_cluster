@@ -19,7 +19,7 @@ def get_vectors(sentences):
         encoded_input = tokenizer(text, return_tensors='pt')
         output = model(**encoded_input)
         for i, token in enumerate(nltk.pos_tag(tokenizer.convert_ids_to_tokens(encoded_input.input_ids.data.numpy().tolist()[0]))):
-            if token[-1].startswith('VB'):
+            if token[-1].startswith('VB') and token[0] not in ['[CLS]','[SEP]']:
                 words.append(token[0])
                 vectors.append(output.last_hidden_state[0].data.numpy()[i])
             
@@ -33,7 +33,7 @@ def cluster(vectors):
 
 
 data_path = "/Users/zheng/Downloads/100cdr/"
-filenames = next(walk(data_path), (None, None, []))[2]
+filenames = next(walk(data_path), (None, None, []))[2][:5]
 sentences = list()
 for file in filenames:
     if file.endswith('.json'):
