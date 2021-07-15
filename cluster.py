@@ -2,7 +2,7 @@ from transformers import BertTokenizer, BertModel
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained("bert-base-uncased")
 
-from sklearn.cluster import AffinityPropagation
+from sklearn.cluster import KMeans
 
 import nltk
 
@@ -26,9 +26,10 @@ def get_vectors(sentences):
     return words, vectors
 
 def cluster(vectors):
-    af = AffinityPropagation(preference=-50).fit(vectors)
-    cluster_centers_indices = af.cluster_centers_indices_
-    labels = af.labels_
+    # af = AffinityPropagation(preference=-50).fit(vectors)
+    # cluster_centers_indices = af.cluster_centers_indices_
+    # labels = af.labels_
+    labels = KMeans(n_clusters=100, random_state=170).fit_predict(vectors)
     return labels
 
 
