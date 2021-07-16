@@ -51,7 +51,6 @@ vectors = list()
 words = list()
 for v in vectors_list:
     words += [v]
-    print(np.mean(sample(vectors_list[v], min(4, len(vectors_list[v]))), axis=0).shape)
     vectors += [np.mean(sample(vectors_list[v], min(4, len(vectors_list[v]))), axis=0)]
 
 cluster_ids = cluster(vectors)
